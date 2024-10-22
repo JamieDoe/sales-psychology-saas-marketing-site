@@ -2,8 +2,8 @@ import { NewBlogForm } from "@/components";
 
 export default function CreateBlog() {
   return (
-    <div>
-      <h1>Create a new Blog</h1>
+    <div className="container mx-auto px-4">
+      <h1 className="text-3xl font-bold">Create Blog</h1>
       <NewBlogForm />
     </div>
   );

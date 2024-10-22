@@ -9,7 +9,7 @@ const DATABASE_ID = process.env.NEXT_APPWRITE_DATABASE_ID!;
 const COLLECTION_ID_BLOGS = process.env.NEXT_APPWRITE_COLLECTION_ID_BLOGS!;
 
 // Appwrite client
-const client = new Client().setEndpoint(ENDPOINT).setProject(PROJECT);
+const client = new Client().setEndpoint(ENDPOINT).setProject(PROJECT).setKey(SECRET)
 
 async function createSessionClient() {
   const session = cookies().get("auth-session");
@@ -27,7 +27,7 @@ async function createSessionClient() {
 async function createAdminClient() {
   return {
     get account() {
-      return new Account(client.setKey(SECRET));
+      return new Account(client);
     },
   };
 }

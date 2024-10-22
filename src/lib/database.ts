@@ -1,12 +1,12 @@
-import { ID, Models } from "node-appwrite";
+import { ID } from "node-appwrite";
 import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "./appwrite";
 
 const database = {
   blogs: {
-    async list(query: string[]) {
+    async list(query?: string[]) {
       return databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS, query);
     },
-    async create(data: Models.Document) {
+    async create(data: any) {
       return databases.createDocument(
         DATABASE_ID,
         COLLECTION_ID_BLOGS,
@@ -21,7 +21,7 @@ const database = {
         documentId
       );
     },
-    async update(documentId: string, data: Models.Document) {
+    async update(documentId: string, data: any) {
       return databases.updateDocument(
         DATABASE_ID,
         COLLECTION_ID_BLOGS,
