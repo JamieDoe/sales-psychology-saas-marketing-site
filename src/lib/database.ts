@@ -12,7 +12,7 @@ type Collection = {
 };
 
 type DatabaseMethods = {
-  list: (query: string[]) => Promise<any>;
+  list: (query?: string[]) => Promise<any>;
   create: (data: object) => Promise<any>;
   get: (documentId: string) => Promise<any>;
   update: (documentId: string, data: any) => Promise<any>;
@@ -38,7 +38,7 @@ const database: Database = {};
 
 collections.forEach((collection) => {
   database[collection.name] = {
-    async list(query: string[]) {
+    async list(query?: string[]) {
       return databases.listDocuments(
         DATABASE_ID,
         collection.collectionId,
