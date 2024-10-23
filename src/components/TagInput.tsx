@@ -18,15 +18,14 @@ export default function TagInput({
   control,
   defaultValue = [],
 }: TagInputProps) {
-  const {
-    field: { onChange, value },
-  } = control
-    ? useController({
-        name,
-        control,
-        defaultValue,
-      })
-    : { field: { onChange: () => {}, value: defaultValue } };
+  const { field } = useController({
+    name,
+    control,
+    defaultValue,
+  });
+
+  const onChange = control ? field.onChange : () => {};
+  const value = control ? field.value : defaultValue;
 
   const [inputValue, setInputValue] = useState('');
 

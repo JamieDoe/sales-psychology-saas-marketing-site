@@ -8,7 +8,6 @@ import { database } from '../database';
 import { newBlogSchema } from '../formSchemas';
 
 export async function createBlog(formData: z.infer<typeof newBlogSchema>) {
-  formData.readingTime;
   try {
     const response = await database.blogs.create(formData);
 
