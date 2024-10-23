@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { ID } from 'node-appwrite';
 import {
   databases,
