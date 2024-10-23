@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
+import { LogoutButton, Toaster } from '@/components';
 
 export const metadata: Metadata = {
-  title: "Sales Psychology Marekting Site",
-  description: "Marketing site for Sales Psychology SaaS",
+  title: 'Sales Psychology Marekting Site',
+  description: 'Marketing site for Sales Psychology SaaS',
 };
 
 export default function RootLayout({
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <LogoutButton />
+        <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );
