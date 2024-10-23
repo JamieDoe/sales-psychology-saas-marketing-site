@@ -1,42 +1,81 @@
-import { ID } from "node-appwrite";
-import { databases, DATABASE_ID, COLLECTION_ID_BLOGS } from "./appwrite";
+import { ID } from 'node-appwrite';
+import {
+  databases,
+  DATABASE_ID,
+  COLLECTION_ID_BLOGS,
+  COLLECTION_ID_USERS,
+} from './appwrite';
 
-const database = {
-  blogs: {
+type Collection = {
+  name: string;
+  collectionId: string;
+};
+
+type DatabaseMethods = {
+  list: (query?: string[]) => Promise<any>;
+  create: (data: object) => Promise<any>;
+  get: (documentId: string) => Promise<any>;
+  update: (documentId: string, data: any) => Promise<any>;
+  delete: (documentId: string) => Promise<any>;
+};
+
+type Database = {
+  [key: string]: DatabaseMethods;
+};
+
+const collections: Collection[] = [
+  {
+    name: 'blogs',
+    collectionId: COLLECTION_ID_BLOGS,
+  },
+  {
+    name: 'users',
+    collectionId: COLLECTION_ID_USERS,
+  },
+];
+
+const database: Database = {};
+
+collections.forEach((collection) => {
+  database[collection.name] = {
     async list(query?: string[]) {
-      return databases.listDocuments(DATABASE_ID, COLLECTION_ID_BLOGS, query);
+      return databases.listDocuments(
+        DATABASE_ID,
+        collection.collectionId,
+        query,
+      );
     },
-    async create(data: any) {
+    async create(data: object) {
       return databases.createDocument(
         DATABASE_ID,
-        COLLECTION_ID_BLOGS,
+        collection.collectionId,
         ID.unique(),
-        data
+        data,
       );
     },
     async get(documentId: string) {
       return databases.getDocument(
         DATABASE_ID,
-        COLLECTION_ID_BLOGS,
-        documentId
+        collection.collectionId,
+        documentId,
       );
     },
-    async update(documentId: string, data: any) {
+    async update(documentId: string, data: object) {
       return databases.updateDocument(
         DATABASE_ID,
-        COLLECTION_ID_BLOGS,
+        collection.collectionId,
         documentId,
-        data
+        data,
       );
     },
     async delete(documentId: string) {
       return databases.deleteDocument(
         DATABASE_ID,
-        COLLECTION_ID_BLOGS,
-        documentId
+        collection.collectionId,
+        documentId,
       );
     },
-  },
-};
+  };
+});
 
 export { database };
