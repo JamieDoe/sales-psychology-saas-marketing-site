@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import {
   Button,
@@ -15,42 +15,28 @@ import {
   FormMessage,
   Input,
   Textarea,
-  TagInput
-} from "@/components";
-import { createBlog } from "@/lib/actions/createBlog";
-import { newBlogSchema } from "@/lib/formSchemas";
+  TagInput,
+} from '@/components';
+import { createBlog } from '@/lib/actions/createBlog';
+import { newBlogSchema } from '@/lib/formSchemas';
 
 export default function NewBlogForm() {
   const form = useForm<z.infer<typeof newBlogSchema>>({
     resolver: zodResolver(newBlogSchema),
-    // defaultValues: {
-    //   title: "",
-    //   slug: "",
-    //   content: "",
-    //   excerpt: "",
-    //   author: "",
-    //   readingTime: "",
-    //   metaTitle: "",
-    //   metaDescription: "",
-    //   metaKeywords: [],
-    // },
-
-    // default values with dummy data
     defaultValues: {
-      title: "Title",
-      slug: "slug",
-      content: "Content",
-      excerpt: "Excerpt",
-      author: "Author",
-      imageUrl: "",
-      readingTime: 1,
-      metaTitle: "Meta Title",
-      metaDescription: "Meta Description",
-      metaKeywords: ["keyword1", "keyword2"],
+      title: '',
+      slug: '',
+      content: '',
+      excerpt: '',
+      author: '',
+      readingTime: 0,
+      metaTitle: '',
+      metaDescription: '',
+      metaKeywords: [],
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof newBlogSchema>) => {
     const response = await createBlog(data);
   };
 
@@ -98,13 +84,15 @@ export default function NewBlogForm() {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormDescription>
-                <span className="font-bold">
-                  Allows for markdown content.
-                </span> {" "}
+                <span className="font-bold">Allows for markdown content.</span>{' '}
                 This will be displayed as the main blog
               </FormDescription>
               <FormControl>
-                <Textarea className="min-h-56" placeholder="Enter the content for the blog" {...field} />
+                <Textarea
+                  className="min-h-56"
+                  placeholder="Enter the content for the blog"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -121,7 +109,10 @@ export default function NewBlogForm() {
                 preview.
               </FormDescription>
               <FormControl>
-                <Textarea placeholder="Enter an excerpt for the blog" {...field} />
+                <Textarea
+                  placeholder="Enter an excerpt for the blog"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -132,17 +123,18 @@ export default function NewBlogForm() {
           name="imageUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Image URL
-              </FormLabel>
+              <FormLabel>Image URL</FormLabel>
               <FormDescription>
                 Enter the image URL for the blog. This will be displayed as the
                 main and preview image.
               </FormDescription>
               <FormControl>
-                <Textarea placeholder="
+                <Textarea
+                  placeholder="
                   Enter the image URL for the blog
-                " {...field} />
+                "
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -176,7 +168,9 @@ export default function NewBlogForm() {
                 the time to read.
               </FormDescription>
               <FormControl>
-                <Input placeholder="Enter the time to read for the blog" {...field}
+                <Input
+                  placeholder="Enter the time to read for the blog"
+                  {...field}
                   onChange={(e) => field.onChange(Number(e.target.value))}
                 />
               </FormControl>
@@ -196,7 +190,10 @@ export default function NewBlogForm() {
                 title in search engines.
               </FormDescription>
               <FormControl>
-                <Input placeholder="Enter the meta title for the blog" {...field} />
+                <Input
+                  placeholder="Enter the meta title for the blog"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -213,7 +210,10 @@ export default function NewBlogForm() {
                 as the description in search engines.
               </FormDescription>
               <FormControl>
-                <Textarea placeholder="Enter the meta description for the blog" {...field} />
+                <Textarea
+                  placeholder="Enter the meta description for the blog"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -229,7 +229,11 @@ export default function NewBlogForm() {
                 Enter the keywords for the blog. This will be used for SEO.
               </FormDescription>
               <FormControl>
-                <TagInput name={field.name} control={form.control} defaultValue={field.value} />
+                <TagInput
+                  name={field.name}
+                  control={form.control}
+                  defaultValue={field.value}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

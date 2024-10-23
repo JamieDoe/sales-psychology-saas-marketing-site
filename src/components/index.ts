@@ -30,3 +30,4 @@ export {
 export { Input } from './ui/input';
 export { Label } from './ui/label';
 export { Textarea } from './ui/textarea';
+export { Toaster } from './ui/sonner';

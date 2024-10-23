@@ -1,10 +1,11 @@
-'use client'
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+'use client';
 
-import React, { useState, KeyboardEvent } from 'react'
-import { X } from "lucide-react"
-import { useController, Control } from 'react-hook-form'
+import React, { useState, KeyboardEvent } from 'react';
+import { X } from 'lucide-react';
+import { useController, Control } from 'react-hook-form';
 
-import { Input, Badge } from "@/components"
+import { Input, Badge } from '@/components';
 
 interface TagInputProps {
   name: string;
@@ -12,42 +13,45 @@ interface TagInputProps {
   defaultValue?: string[];
 }
 
-export default function TagInput({ name, control, defaultValue = [] }: TagInputProps) {
-  const {
-    field: { onChange, value },
-  } = control
-      ? useController({
-        name,
-        control,
-        defaultValue,
-      })
-      : { field: { onChange: () => { }, value: defaultValue } };
+export default function TagInput({
+  name,
+  control,
+  defaultValue = [],
+}: TagInputProps) {
+  const { field } = useController({
+    name,
+    control,
+    defaultValue,
+  });
 
-  const [inputValue, setInputValue] = useState('')
+  const onChange = control ? field.onChange : () => {};
+  const value = control ? field.value : defaultValue;
+
+  const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-  }
+    setInputValue(e.target.value);
+  };
 
   const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && inputValue.trim() !== '') {
-      e.preventDefault()
-      addTag(inputValue.trim())
+      e.preventDefault();
+      addTag(inputValue.trim());
     } else if (e.key === 'Backspace' && inputValue === '' && value.length > 0) {
-      removeTag(value.length - 1)
+      removeTag(value.length - 1);
     }
-  }
+  };
 
   const addTag = (tag: string) => {
     if (!value.includes(tag)) {
-      onChange([...value, tag])
-      setInputValue('')
+      onChange([...value, tag]);
+      setInputValue('');
     }
-  }
+  };
 
   const removeTag = (index: number) => {
-    onChange(value.filter((_: string, i: number) => i !== index))
-  }
+    onChange(value.filter((_: string, i: number) => i !== index));
+  };
 
   return (
     <div className="w-full">
@@ -78,5 +82,5 @@ export default function TagInput({ name, control, defaultValue = [] }: TagInputP
         Press Enter to add a keyword, Backspace to remove the last keyword.
       </p>
     </div>
-  )
+  );
 }
