@@ -28,7 +28,7 @@ export default function SignupForm() {
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof signupSchema>) => {
     const response = await createPreSignup(data);
 
     if (!response?.success) {

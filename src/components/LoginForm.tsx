@@ -1,8 +1,8 @@
-"use client"
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
 import {
   Button,
@@ -13,27 +13,27 @@ import {
   FormControl,
   FormMessage,
   Input,
-} from "@/components";
+} from '@/components';
 
-import { loginAdmin } from "@/lib/actions/adminAuth";
-import { loginSchema } from "@/lib/formSchemas";
+import { loginAdmin } from '@/lib/actions/adminAuth';
+import { loginSchema } from '@/lib/formSchemas';
 
 export default function LoginAdmin() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     const response = await loginAdmin(data);
 
     if (!response) {
       return;
     }
-  }
+  };
 
   return (
     <Form {...form}>
@@ -69,6 +69,5 @@ export default function LoginAdmin() {
         <Button type="submit">Login</Button>
       </form>
     </Form>
-  )
-
+  );
 }
