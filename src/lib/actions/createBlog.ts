@@ -4,10 +4,12 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-import { database } from '../database';
+import databaseConnection from '@/lib/database';
 import { newBlogSchema } from '../formSchemas';
 
 export async function createBlog(formData: z.infer<typeof newBlogSchema>) {
+  const { database } = await databaseConnection();
+
   try {
     const response = await database.blogs.create(formData);
 

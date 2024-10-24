@@ -36,48 +36,50 @@ const collections: Collection[] = [
   },
 ];
 
-const database: Database = {};
+export default async function databaseConnection() {
+  const database: Database = {};
 
-collections.forEach((collection) => {
-  database[collection.name] = {
-    async list(query?: string[]) {
-      return databases.listDocuments(
-        DATABASE_ID,
-        collection.collectionId,
-        query,
-      );
-    },
-    async create(data: object) {
-      return databases.createDocument(
-        DATABASE_ID,
-        collection.collectionId,
-        ID.unique(),
-        data,
-      );
-    },
-    async get(documentId: string) {
-      return databases.getDocument(
-        DATABASE_ID,
-        collection.collectionId,
-        documentId,
-      );
-    },
-    async update(documentId: string, data: object) {
-      return databases.updateDocument(
-        DATABASE_ID,
-        collection.collectionId,
-        documentId,
-        data,
-      );
-    },
-    async delete(documentId: string) {
-      return databases.deleteDocument(
-        DATABASE_ID,
-        collection.collectionId,
-        documentId,
-      );
-    },
-  };
-});
+  collections.forEach((collection) => {
+    database[collection.name] = {
+      async list(query?: string[]) {
+        return databases.listDocuments(
+          DATABASE_ID,
+          collection.collectionId,
+          query,
+        );
+      },
+      async create(data: object) {
+        return databases.createDocument(
+          DATABASE_ID,
+          collection.collectionId,
+          ID.unique(),
+          data,
+        );
+      },
+      async get(documentId: string) {
+        return databases.getDocument(
+          DATABASE_ID,
+          collection.collectionId,
+          documentId,
+        );
+      },
+      async update(documentId: string, data: object) {
+        return databases.updateDocument(
+          DATABASE_ID,
+          collection.collectionId,
+          documentId,
+          data,
+        );
+      },
+      async delete(documentId: string) {
+        return databases.deleteDocument(
+          DATABASE_ID,
+          collection.collectionId,
+          documentId,
+        );
+      },
+    };
+  });
 
-export { database };
+  return { database };
+}

@@ -1,45 +1,50 @@
-"use server"
+'use server';
 
-import { redirect } from "next/navigation"
-import { cookies } from "next/headers"
+import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
-import { createAdminClient, createSessionClient } from "../appwrite"
-import { AdminLoginProps } from "../types"
+import { createAdminClient, createSessionClient } from '../appwrite';
+import { AdminLoginProps } from '../types';
 
 async function loginAdmin(data: AdminLoginProps) {
-  const { email, password } = data
+  const { email, password } = data;
 
   try {
-    const { account } = await createAdminClient()
+    const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
 
     if (!session.secret) {
-      return { error: "Invalid email or password" };
+      return { error: 'Invalid email or password' };
     }
 
-    cookies().set("auth-session", session.secret, {
-      path: "/",
+    cookies().set('auth-session', session.secret, {
+      path: '/',
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: 'strict',
       secure: true,
     });
 
-    console.log("Admin user logged in successfully")
-
+    console.log('Admin user logged in successfully');
   } catch (error) {
-    console.error("Failed to login admin user", error)
+    console.error('Failed to login admin user', error);
   }
 
-  return redirect("/blog/create-blog")
+  return redirect('/blog/create-blog');
 }
 
 async function logoutAdmin() {
-  const { account } = await createSessionClient();
+  const session = cookies().get('auth-session');
 
-  cookies().delete("auth-session");
-  await account.deleteSession("current");
+  if (!session || !session.value) {
+    return redirect('/blog/admin-login');
+  }
 
-  redirect("/blog");
+  const { account } = await createSessionClient(session.value);
+
+  cookies().delete('auth-session');
+  await account.deleteSession('current');
+
+  return redirect('/blog/admin-login');
 }
 
-export { loginAdmin, logoutAdmin }
+export { loginAdmin, logoutAdmin };
