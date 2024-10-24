@@ -2,32 +2,7 @@ import Link from 'next/link';
 
 import { Separator } from '@/components';
 
-const links = [
-  {
-    title: 'Company',
-    links: [
-      { title: 'About', href: '/about' },
-      { title: 'Contact', href: '/contact' },
-      { title: 'Careers', href: '/careers' },
-    ],
-  },
-  {
-    title: 'Services',
-    links: [
-      { title: 'Services', href: '/services' },
-      { title: 'Pricing', href: '/pricing' },
-      { title: 'FAQ', href: '/faq' },
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      { title: 'Blog', href: '/blog' },
-      { title: 'Guides', href: '/guides' },
-      { title: 'Webinars', href: '/webinars' },
-    ],
-  },
-];
+import { navigationItems } from '@/utils/data/navigationItems';
 
 export default function Footer() {
   return (
@@ -40,7 +15,7 @@ export default function Footer() {
             </Link>
           </div>
 
-          {links.map((link) => (
+          {navigationItems.footer.map((link) => (
             <div key={link.title} className="flex flex-col space-y-2">
               <h3>{link.title}</h3>
               {link.links.map((item) => (
