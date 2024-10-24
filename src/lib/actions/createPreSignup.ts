@@ -2,12 +2,13 @@
 
 import { z } from 'zod';
 
-import { database } from '../database';
+import databaseConnection from '../database';
 import { signupSchema } from '../formSchemas';
 
 export default async function createPreSignup(
   data: z.infer<typeof signupSchema>,
 ) {
+  const { database } = await databaseConnection();
   const { email, firstName } = data;
 
   try {
