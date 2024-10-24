@@ -5,8 +5,10 @@ export { default as LogoutButton } from './LogoutButton';
 export { default as LoginForm } from './LoginForm';
 export { default as NavBar } from './navigation/NavBar';
 export { default as NewBlogForm } from './NewBlogForm';
+export { default as MarkdownParser } from './MarkdownParser';
 export { default as SignupForm } from './SignupForm';
 export { default as TagInput } from './TagInput';
+export { default as Footer } from './Footer';
 
 // Exports for ShadCn components
 export { Button, buttonVariants } from './ui/button';
@@ -42,5 +44,6 @@ export {
 } from './ui/form';
 export { Input } from './ui/input';
 export { Label } from './ui/label';
+export { Separator } from './ui/separator';
 export { Textarea } from './ui/textarea';
 export { Toaster } from './ui/sonner';

@@ -1,9 +1,9 @@
-import { BlogList } from "@/components";
-import { database } from "@/lib/database";
+import { BlogList } from '@/components';
+import databaseConnection from '@/lib/database';
 
 export default async function Blog() {
-  const blogs = (await database.blogs.list()).documents;
-
+  const { database } = await databaseConnection();
+  const blogs = await database.blogs.list().then((res) => res.documents);
 
   return (
     <div>

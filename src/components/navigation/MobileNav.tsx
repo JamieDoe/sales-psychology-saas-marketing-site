@@ -11,6 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
   Button,
+  LogoutButton,
 } from '@/components';
 import Link from 'next/link';
 
@@ -19,7 +20,13 @@ interface NavItem {
   href: string;
 }
 
-export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
+export default function MobileNav({
+  navItems,
+  account,
+}: {
+  navItems: NavItem[];
+  account?: boolean;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex md:hidden">
@@ -44,6 +51,11 @@ export default function MobileNav({ navItems }: { navItems: NavItem[] }) {
                 {item.name}
               </Link>
             ))}
+            {account && (
+              <div onClick={() => setIsOpen(!isOpen)}>
+                <LogoutButton />
+              </div>
+            )}
           </div>
           <DrawerClose asChild className="absolute top-4 right-4">
             <Button variant="outline" size="icon" className="rounded-full">
